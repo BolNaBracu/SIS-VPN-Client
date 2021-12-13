@@ -24,5 +24,10 @@ namespace SIS_VPN_Client_Application
         {
             InitializeComponent();
         }
+
+        private void TopBarControl_OnMovingWindow()
+        {
+            DragMove();
+        }
     }
 }
