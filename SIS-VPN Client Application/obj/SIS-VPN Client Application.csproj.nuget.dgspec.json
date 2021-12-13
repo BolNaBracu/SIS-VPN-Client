@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "restore": {
+    "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Client\\SIS-VPN Client Application\\SIS-VPN Client Application.csproj": {}
+  },
+  "projects": {
+    "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Client\\SIS-VPN Client Application\\SIS-VPN Client Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Client\\SIS-VPN Client Application\\SIS-VPN Client Application.csproj",
+        "projectName": "SIS-VPN Client Application",
+        "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Client\\SIS-VPN Client Application\\SIS-VPN Client Application.csproj",
+        "packagesPath": "C:\\Users\\Mislav\\.nuget\\packages\\",
+        "outputPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Client\\SIS-VPN Client Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
