@@ -16,18 +16,20 @@
         </Grid.Background>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="1*" MinWidth="250" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="2" BorderBrush="Green" Grid.ColumnSpan="3" Grid.RowSpan="3" />
-        
+        <Border BorderThickness="2" BorderBrush="Green" Grid.ColumnSpan="3" Grid.RowSpan="3" Panel.ZIndex="99" />
+
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentControl}" />
+
+        <usercontrols:SideMenu Grid.Row="1" Grid.RowSpan="2" OnOptionSelected="SideMenu_OnOptionSelected" />
+
         <usercontrols:TopBarControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Height="30" OnMovingWindow="TopBarControl_OnMovingWindow" />
 
     </Grid>
