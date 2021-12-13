@@ -1,2 +1,2 @@
 # SIS-VPN
-Implementacija VPN-a. Projekt iz kolegija Sigurnost informacijskih sustava.
+This repository contains the client side of the application.
