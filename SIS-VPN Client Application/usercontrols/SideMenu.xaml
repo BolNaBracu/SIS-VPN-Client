@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="SIS_VPN_Client_Application.usercontrols.SideMenu" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:SIS_VPN_Client_Application.usercontrols" mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="250" BorderBrush="Green" BorderThickness="0,0,1,0">
+    <UserControl.Resources>
+        <Style x:Key="MenuText" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <ContentPresenter />
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="LightGreen" />
+                                <Setter Property="Opacity" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            
+            <Setter Property="Foreground" Value="Green" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="Opacity" Value="0.65" />
+        </Style>
+    </UserControl.Resources>
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF131313" />
+            <GradientStop Color="#FF2E2E2E" Offset="1" />
+        </LinearGradientBrush>
+    </UserControl.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="55" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="88*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Image x:Name="ConnectImage"  Grid.Column="1" Grid.Row="2" Source="/resources/symbols/symbol-disconnected.png" />
+        <RadioButton x:Name="ConnectButton" Grid.Column="3" Grid.Row="2" Content="Connect" Checked="ConnectButton_Checked" Style="{StaticResource MenuText}" />
+
+        <Image x:Name="EndpointsImage" Grid.Column="1" Grid.Row="4" Source="/resources/symbols/symbol-server.png" />
+        <RadioButton x:Name="EndpointsButton" Grid.Column="3" Grid.Row="4" Content="Endpoints" Checked="EndpointsButton_Checked" Style="{StaticResource MenuText}" />
+
+        <Image x:Name="OptionsImage" Grid.Column="1" Grid.Row="6" Source="/resources/symbols/symbol-settings.png" />
+        <RadioButton x:Name="OptionsButton" Grid.Column="3" Grid.Row="6" Content="Options" Checked="OptionsButton_Checked" Style="{StaticResource MenuText}" />
+
+        <Image x:Name="AboutImage" Grid.Column="1" Grid.Row="8" Source="/resources/symbols/symbol-about.png" />
+        <RadioButton x:Name="AboutButton" Grid.Column="3" Grid.Row="8" Content="About" Checked="AboutButton_Checked" Style="{StaticResource MenuText}" />
+    </Grid>
+</UserControl>
