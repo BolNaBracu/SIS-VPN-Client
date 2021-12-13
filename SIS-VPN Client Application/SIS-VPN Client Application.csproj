@@ -5,17 +5,39 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>SIS_VPN_Client_Application</RootNamespace>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <StartupObject>SIS_VPN_Client_Application.App</StartupObject>
+    <Authors>Mislav Matijević</Authors>
+    <Company>Bol na Braču</Company>
+    <PackageId>SIS-VPN-Client</PackageId>
+    <Description>College Project for SIS class.</Description>
+    <RepositoryUrl>https://github.com/BolNaBracu/SIS-VPN-Client</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>VPN, security</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <Resource Include="resources\icon.png" />
-    <Resource Include="resources\VPN-SIS_icon.png" />
     <Resource Include="resources\symbols\symbol-about.png" />
     <Resource Include="resources\symbols\symbol-close.png" />
     <Resource Include="resources\symbols\symbol-connected.png" />
     <Resource Include="resources\symbols\symbol-disconnected.png" />
     <Resource Include="resources\symbols\symbol-server.png" />
     <Resource Include="resources\symbols\symbol-settings.png" />
+    <Resource Include="resources\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="logic\" />
   </ItemGroup>
 
 </Project>
