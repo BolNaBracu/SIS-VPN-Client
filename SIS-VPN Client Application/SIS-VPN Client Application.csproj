@@ -7,4 +7,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Resource Include="resources\icon.png" />
+    <Resource Include="resources\VPN-SIS_icon.png" />
+    <Resource Include="resources\symbols\symbol-about.png" />
+    <Resource Include="resources\symbols\symbol-close.png" />
+    <Resource Include="resources\symbols\symbol-connected.png" />
+    <Resource Include="resources\symbols\symbol-disconnected.png" />
+    <Resource Include="resources\symbols\symbol-server.png" />
+    <Resource Include="resources\symbols\symbol-settings.png" />
+  </ItemGroup>
+
 </Project>
