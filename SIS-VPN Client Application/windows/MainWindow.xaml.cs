@@ -1,6 +1,4 @@
-﻿using SIS_VPN_Client_Application.usercontrols;
-using SIS_VPN_Client_Application.usercontrols.menu;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SIS_VPN_Client_Application.usercontrols;
+using SIS_VPN_Client_Application.usercontrols.menu;
 
 namespace SIS_VPN_Client_Application
 {
@@ -24,6 +24,12 @@ namespace SIS_VPN_Client_Application
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public MainWindow()
+        {
+            DataContext = this;
+            InitializeComponent();
+        }
 
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
             { "WelcomeControl", new WelcomeControl() },
@@ -43,12 +49,6 @@ namespace SIS_VPN_Client_Application
         private void ChangeCurrentControl(SideMenuOptions option)
         {
             currentControl = option.ToString();
-        }
-
-        public MainWindow()
-        {
-            DataContext = this;
-            InitializeComponent();
         }
 
         private void TopBarControl_OnMovingWindow()
