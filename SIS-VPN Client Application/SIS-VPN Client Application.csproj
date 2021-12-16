@@ -19,6 +19,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="dll\**" />
+    <EmbeddedResource Remove="dll\**" />
+    <None Remove="dll\**" />
+    <Page Remove="dll\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="resources\icon.png" />
     <Resource Include="resources\symbols\symbol-about.png" />
     <Resource Include="resources\symbols\symbol-close.png" />
@@ -42,6 +49,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1083-prerelease" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SISVPN_ClientConnect">
+      <HintPath>dll\SISVPN_ClientConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="SISVPN_Common">
+      <HintPath>dll\SISVPN_Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
