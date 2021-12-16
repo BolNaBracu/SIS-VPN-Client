@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
+using SISVPN.Client;
 
 namespace SIS_VPN_Client_Application.usercontrols.menu
 {
@@ -23,10 +14,22 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
     public partial class ConnectControl : UserControl
     {
         CoreWebView2Environment env;
+        Semaphore waitForAnswerSemaphore;
+        HttpResponseMessage httpResponse;
+
         public ConnectControl()
         {
             InitializeComponent();
             LoadAsync();
+            Connection.Instance.Begin("127.0.0.1");
+            Connection.Instance.OnResponseReceived += Connection_OnResponseReceived;
+            waitForAnswerSemaphore = new(0, 1);
+        }
+
+        private void Connection_OnResponseReceived(object sender, OnResponseReceivedEventArgs e)
+        {
+            httpResponse = e.Response;
+            waitForAnswerSemaphore.Release();
         }
 
         private async void LoadAsync()
@@ -40,11 +43,15 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             webView.Source = new Uri("https://www.bing.com/", UriKind.Absolute);
         }
 
-        private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
+        private async void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
         {
-            Console.WriteLine(e.Request);
-            // TODO: Get Response from server, write it in here:
-            e.Response = env.CreateWebResourceResponse(null, 401, "Unauthorized", "headers"); ;
+            HttpRequestMessage httpRequestMessage = new();
+            httpRequestMessage.Method = new(e.Request.Method);
+            httpRequestMessage.RequestUri = new(e.Request.Uri);
+            await Connection.Instance.SendHttpRequest(httpRequestMessage);
+            waitForAnswerSemaphore.WaitOne();
+
+            e.Response = env.CreateWebResourceResponse(await httpResponse.Content.ReadAsStreamAsync(), ((int)httpResponse.StatusCode), httpResponse.ReasonPhrase, httpResponse.Headers.ToString());
         }
 
         private void ButtonGo_Click(object sender, RoutedEventArgs e)

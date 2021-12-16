@@ -26,7 +26,7 @@
 
         <Border BorderThickness="2" BorderBrush="Green" Grid.ColumnSpan="3" Grid.RowSpan="3" Panel.ZIndex="99" />
 
-        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentControl}" />
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentControl}" Margin="0 0 15 15" />
 
         <usercontrols:SideMenu Grid.Row="1" Grid.RowSpan="2" OnOptionSelected="SideMenu_OnOptionSelected" />
 
