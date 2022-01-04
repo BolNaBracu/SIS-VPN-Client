@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,22 +30,36 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             LoadAsync();
         }
 
+        private void ConnectWithOpenVPN()
+        {
+            Process process = new Process();
+            ProcessStartInfo startinfo = new ProcessStartInfo();
+            startinfo.FileName = AppDomain.CurrentDomain.BaseDirectory + @"openvpn\openvpn.exe";
+            startinfo.Arguments = "--config SIS-VPN_Client.ovpn";
+            startinfo.Verb = "runas";
+            process.StartInfo = startinfo;
+            process.Start();
+        }
+
+        private void DisconnectFromOpenVPN()
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "taskkill",
+                Arguments = $"/f /im openvpn.exe"
+            });
+        }
+
         private async void LoadAsync()
         {
             CoreWebView2EnvironmentOptions Options = new CoreWebView2EnvironmentOptions();
             env =
                 await CoreWebView2Environment.CreateAsync(null, null, Options);
-            await webView.EnsureCoreWebView2Async(env);
-            webView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
-            webView.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
-            webView.Source = new Uri("https://www.bing.com/", UriKind.Absolute);
-        }
 
-        private void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
-        {
-            Console.WriteLine(e.Request);
-            // TODO: Get Response from server, write it in here:
-            e.Response = env.CreateWebResourceResponse(null, 401, "Unauthorized", "headers"); ;
+            ConnectWithOpenVPN();
+            await webView.EnsureCoreWebView2Async(env);
+
+            webView.Source = new Uri("https://google.com/", UriKind.Absolute);
         }
 
         private void ButtonGo_Click(object sender, RoutedEventArgs e)
@@ -62,6 +77,11 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
                     MessageBox.Show(ex.Message, "Invalid URL", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void ButtonDisconnect_Click(object sender, RoutedEventArgs e)
+        {
+            DisconnectFromOpenVPN();
         }
     }
 }
