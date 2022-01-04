@@ -21,7 +21,7 @@
             <Setter Property="Foreground" Value="Green" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="Consolas" />
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontSize" Value="22" />
             <Setter Property="Opacity" Value="0.65" />
         </Style>
     </UserControl.Resources>
@@ -33,7 +33,7 @@
     </UserControl.Background>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="55" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="88*" />
@@ -56,8 +56,8 @@
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
 
-        <Image x:Name="ConnectImage"  Grid.Column="1" Grid.Row="2" Source="/resources/symbols/symbol-disconnected.png" />
-        <RadioButton x:Name="ConnectButton" Grid.Column="3" Grid.Row="2" Content="Connect" Checked="ConnectButton_Checked" Style="{StaticResource MenuText}" />
+        <Image x:Name="ConnectImage" Grid.Column="1" Grid.Row="2" Source="/resources/symbols/symbol-disconnected.png" />
+        <RadioButton x:Name="ConnectButton" Grid.Column="3" Grid.Row="2" Content="No connection" Checked="ConnectButton_Checked" Style="{StaticResource MenuText}" />
 
         <Image x:Name="EndpointsImage" Grid.Column="1" Grid.Row="4" Source="/resources/symbols/symbol-server.png" />
         <RadioButton x:Name="EndpointsButton" Grid.Column="3" Grid.Row="4" Content="Endpoints" Checked="EndpointsButton_Checked" Style="{StaticResource MenuText}" />

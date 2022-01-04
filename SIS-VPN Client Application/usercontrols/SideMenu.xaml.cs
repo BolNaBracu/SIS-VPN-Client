@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SISVPN.Client;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SIS_VPN_Client_Application.usercontrols
 {
@@ -39,11 +42,30 @@ namespace SIS_VPN_Client_Application.usercontrols
     /// </summary>
     public partial class SideMenu : UserControl
     {
-        public SideMenuOptions SelectedOption { get; set; }
+        private bool IsConnected { get; set; }
+
+        public SideMenuOptions SelectedOption { get; private set; }
         public SideMenu()
         {
             DataContext = this;
             InitializeComponent();
+            Connection.Instance.OnConnectionChanged += Connection_OnConnectionChanged;
+        }
+
+        private void Connection_OnConnectionChanged(object sender, SISVPN.Client.EventArgs.OnConnectionEstablishedEventArgs onConnectionEstablishedEventArgs)
+        {
+            IsConnected = onConnectionEstablishedEventArgs.State;
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                ConnectButton.Content = IsConnected
+                ? "Connected"
+                : "No connection";
+
+                ConnectImage.Source = IsConnected
+                    ? new BitmapImage(new Uri(@"/resources/symbols/symbol-connected.png", UriKind.Relative))
+                    : new BitmapImage(new Uri(@"/resources/symbols/symbol-disconnected.png", UriKind.Relative));
+            }));
         }
 
         public delegate void OptionSelected(object sender, OptionSelectedEventArgs e);

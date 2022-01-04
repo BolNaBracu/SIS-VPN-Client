@@ -52,12 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="SISVPN_ClientConnect">
-      <HintPath>dll\SISVPN_ClientConnect.dll</HintPath>
-    </Reference>
-    <Reference Include="SISVPN_Common">
-      <HintPath>dll\SISVPN_Common.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\SIS-VPN-Modules\ClientConnectionModule\ClientConnectionModule.csproj" />
+    <ProjectReference Include="..\..\SIS-VPN-Modules\CommonModule\CommonModule.csproj" />
   </ItemGroup>
 
 </Project>

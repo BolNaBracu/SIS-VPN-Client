@@ -30,7 +30,14 @@
         "frameworks": {
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
-            "projectReferences": {}
+            "projectReferences": {
+              "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\ClientConnectionModule.csproj": {
+                "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\ClientConnectionModule.csproj"
+              },
+              "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj": {
+                "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -66,7 +73,125 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\ClientConnectionModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\ClientConnectionModule.csproj",
+        "projectName": "SISVPN_ClientConnect",
+        "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\ClientConnectionModule.csproj",
+        "packagesPath": "C:\\Users\\Mislav\\.nuget\\packages\\",
+        "outputPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\ClientConnectionModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj": {
+                "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj",
+        "projectName": "SISVPN_Common",
+        "projectPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\CommonModule.csproj",
+        "packagesPath": "C:\\Users\\Mislav\\.nuget\\packages\\",
+        "outputPath": "B:\\FOI\\FOI Materijali\\7. semestar\\SIS\\Projekt\\SIS-VPN-Modules\\CommonModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

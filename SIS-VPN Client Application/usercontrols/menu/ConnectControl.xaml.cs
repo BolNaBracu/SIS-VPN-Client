@@ -1,10 +1,18 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
 using Microsoft.Web.WebView2.Core;
+
 using SISVPN.Client;
+using SISVPN.Client.EventArgs;
+using SISVPN.Common.Models;
 
 namespace SIS_VPN_Client_Application.usercontrols.menu
 {
@@ -13,34 +21,55 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
     /// </summary>
     public partial class ConnectControl : UserControl
     {
-        CoreWebView2Environment env;
-        Semaphore waitForAnswerSemaphore;
-        HttpResponseMessage httpResponse;
+        private CoreWebView2Environment env;
+        private Semaphore waitForAnswerSemaphore;
+        private ResponseObject responseObject;
 
         public ConnectControl()
         {
             InitializeComponent();
-            LoadAsync();
-            Connection.Instance.Begin("127.0.0.1");
+
+            Connection.Instance.OnConnectionChanged += Connection_OnConnectionChanged;
             Connection.Instance.OnResponseReceived += Connection_OnResponseReceived;
             waitForAnswerSemaphore = new(0, 1);
+
+            _ = LoadAsync();
+        }
+
+        private void Connection_OnConnectionChanged(object sender, OnConnectionEstablishedEventArgs onConnectionEstablishedEventArgs)
+        {
+            if (onConnectionEstablishedEventArgs.State)
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(async () =>
+                {
+                    env = await CoreWebView2Environment.CreateAsync();
+                    await webView.EnsureCoreWebView2Async(env);
+                    webView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
+                    webView.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
+                    webView.Source = new Uri("https://www.bing.com/", UriKind.Absolute);
+                }));
+            }
+            else
+            {
+                MessageBox.Show("Connection to server lost!\nWe are trying to connect in the background...", "Connection lost!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                _ = LoadAsync();
+            }
         }
 
         private void Connection_OnResponseReceived(object sender, OnResponseReceivedEventArgs e)
         {
-            httpResponse = e.Response;
-            waitForAnswerSemaphore.Release();
+            responseObject = e.Response;
+            _ = waitForAnswerSemaphore.Release();
         }
 
-        private async void LoadAsync()
+        private async Task LoadAsync()
         {
-            CoreWebView2EnvironmentOptions Options = new CoreWebView2EnvironmentOptions();
-            env =
-                await CoreWebView2Environment.CreateAsync(null, null, Options);
-            await webView.EnsureCoreWebView2Async(env);
-            webView.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
-            webView.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
-            webView.Source = new Uri("https://www.bing.com/", UriKind.Absolute);
+            await Connection.Instance.BeginAsync("127.0.0.1");
+        }
+
+        private async Task WaitForResponse()
+        {
+            await Connection.Instance.GetResponseAsync();
         }
 
         private async void CoreWebView2_WebResourceRequested(object sender, CoreWebView2WebResourceRequestedEventArgs e)
@@ -48,10 +77,20 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             HttpRequestMessage httpRequestMessage = new();
             httpRequestMessage.Method = new(e.Request.Method);
             httpRequestMessage.RequestUri = new(e.Request.Uri);
-            await Connection.Instance.SendHttpRequest(httpRequestMessage);
-            waitForAnswerSemaphore.WaitOne();
+            try
+            {
+                await Connection.Instance.SendHttpRequest(httpRequestMessage);
+                await WaitForResponse();
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
-            e.Response = env.CreateWebResourceResponse(await httpResponse.Content.ReadAsStreamAsync(), ((int)httpResponse.StatusCode), httpResponse.ReasonPhrase, httpResponse.Headers.ToString());
+            MemoryStream mStrm = new MemoryStream(Encoding.UTF8.GetBytes(responseObject.ResponseBody));
+            e.Response = env.CreateWebResourceResponse(mStrm, responseObject.StatusCode, responseObject.ReasonPhrase, responseObject.Headers);
+
+            return;
         }
 
         private void ButtonGo_Click(object sender, RoutedEventArgs e)

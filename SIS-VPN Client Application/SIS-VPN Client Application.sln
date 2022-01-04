@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS-VPN Client Application", "SIS-VPN Client Application.csproj", "{51724CB6-68EC-4BC8-883C-2F7CBD242418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS-VPN Client Application", "SIS-VPN Client Application.csproj", "{51724CB6-68EC-4BC8-883C-2F7CBD242418}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientConnectionModule", "..\..\SIS-VPN-Modules\ClientConnectionModule\ClientConnectionModule.csproj", "{FA86F788-61B9-49DF-A8DF-18F07F3B9CC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonModule", "..\..\SIS-VPN-Modules\CommonModule\CommonModule.csproj", "{6B77852B-E7BC-43E8-99B6-A58D1934135F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{51724CB6-68EC-4BC8-883C-2F7CBD242418}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51724CB6-68EC-4BC8-883C-2F7CBD242418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51724CB6-68EC-4BC8-883C-2F7CBD242418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA86F788-61B9-49DF-A8DF-18F07F3B9CC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA86F788-61B9-49DF-A8DF-18F07F3B9CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA86F788-61B9-49DF-A8DF-18F07F3B9CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA86F788-61B9-49DF-A8DF-18F07F3B9CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B77852B-E7BC-43E8-99B6-A58D1934135F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B77852B-E7BC-43E8-99B6-A58D1934135F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B77852B-E7BC-43E8-99B6-A58D1934135F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B77852B-E7BC-43E8-99B6-A58D1934135F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
