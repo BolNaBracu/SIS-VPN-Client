@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIS_VPN_Client_Application.logic;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -40,10 +41,28 @@ namespace SIS_VPN_Client_Application.usercontrols
     public partial class SideMenu : UserControl
     {
         public SideMenuOptions SelectedOption { get; set; }
+
+        private bool connectionEstablished;
+
+        private void SetConnectionEstablished(bool value)
+        {
+            new BitmapImage(new Uri("pack://application:;" + (value ?
+            "\\resources\\symbols\\symbol-connected.png" :
+            "\\resources\\symbols\\symbol-disconnected.png")));
+            connectionEstablished = value;
+            ConnectButton.IsEnabled = value;
+        }
+
         public SideMenu()
         {
             DataContext = this;
             InitializeComponent();
+            ConnectVPN.Instance.OnConnectionChange += VPN_OnConnectionChange;
+        }
+
+        private void VPN_OnConnectionChange(object sender, OnConnectionChangeEventArgs e)
+        {
+            SetConnectionEstablished(e.NewState);
         }
 
         public delegate void OptionSelected(object sender, OptionSelectedEventArgs e);
@@ -51,8 +70,11 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         private void ConnectButton_Checked(object sender, RoutedEventArgs e)
         {
-            SelectedOption = SideMenuOptions.Connect;
-            AlertSubscribersOnOptionChange();
+            if (connectionEstablished)
+            {
+                SelectedOption = SideMenuOptions.Connect;
+                AlertSubscribersOnOptionChange();
+            }
         }
 
         private void EndpointsButton_Checked(object sender, RoutedEventArgs e)

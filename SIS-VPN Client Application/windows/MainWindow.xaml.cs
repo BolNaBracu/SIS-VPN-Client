@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SIS_VPN_Client_Application.logic;
 using SIS_VPN_Client_Application.usercontrols;
 using SIS_VPN_Client_Application.usercontrols.menu;
 
@@ -28,12 +29,36 @@ namespace SIS_VPN_Client_Application
         public MainWindow()
         {
             DataContext = this;
+            WaitForConnection();
             InitializeComponent();
         }
 
+        private void WaitForConnection()
+        {
+            ConnectVPN.Instance.OnConnectionChange += VPN_OnConnectionChange;
+            _ = Task.Run(async () => await ConnectVPN.Instance.WaitForConnectionAsync());
+        }
+
+        private void VPN_OnConnectionChange(object sender, OnConnectionChangeEventArgs e)
+        {
+            if (e.NewState == true)
+            {
+                if (!controls.TryGetValue("Connect", out _))
+                {
+                    controls.Add("Connect", new ConnectControl());
+                }
+            }
+            else
+            {
+                if (controls.TryGetValue("Connect", out _))
+                {
+                    controls.Remove("Connect");
+                }
+            }
+        }
+
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
-            { "WelcomeControl", new WelcomeControl() },
-            { "Connect", new ConnectControl() }
+            { "WelcomeControl", new WelcomeControl() }
         };
 
         private string currentControl = "WelcomeControl";
@@ -60,6 +85,11 @@ namespace SIS_VPN_Client_Application
         {
             currentControl = e.SideMenuOption.ToString();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentControl)));
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ConnectVPN.Instance.DisconnectFromOpenVPN();
         }
     }
 }

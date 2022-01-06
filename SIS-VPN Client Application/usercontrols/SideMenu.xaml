@@ -57,7 +57,7 @@
         </Grid.RowDefinitions>
 
         <Image x:Name="ConnectImage"  Grid.Column="1" Grid.Row="2" Source="/resources/symbols/symbol-disconnected.png" />
-        <RadioButton x:Name="ConnectButton" Grid.Column="3" Grid.Row="2" Content="Connect" Checked="ConnectButton_Checked" Style="{StaticResource MenuText}" />
+        <RadioButton x:Name="ConnectButton" Grid.Column="3" Grid.Row="2" Content="Connect" IsEnabled="False" Checked="ConnectButton_Checked" Style="{StaticResource MenuText}" />
 
         <Image x:Name="EndpointsImage" Grid.Column="1" Grid.Row="4" Source="/resources/symbols/symbol-server.png" />
         <RadioButton x:Name="EndpointsButton" Grid.Column="3" Grid.Row="4" Content="Endpoints" Checked="EndpointsButton_Checked" Style="{StaticResource MenuText}" />
