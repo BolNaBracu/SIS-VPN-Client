@@ -62,6 +62,12 @@ namespace SIS_VPN_Client_Application.logic
                 vpnProcess.Kill();
                 vpnProcess.Close();
             }
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "taskkill",
+                Arguments = $"/f /im openvpn.exe",
+                UseShellExecute = false
+            }).WaitForExit();
         }
     }
 }
