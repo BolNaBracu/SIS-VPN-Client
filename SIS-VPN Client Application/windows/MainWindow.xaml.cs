@@ -58,7 +58,8 @@ namespace SIS_VPN_Client_Application
         }
 
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
-            { "WelcomeControl", new WelcomeControl() }
+            { "WelcomeControl", new WelcomeControl() },
+            { "Endpoints", new EndpointsControl() },
         };
 
         private string currentControl = "WelcomeControl";
