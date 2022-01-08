@@ -395,3 +395,15 @@ FodyWeavers.xsd
 !*/openvpn/*
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
+
+SIS-VPN Client Application/obj/project.assets.json
+
+SIS-VPN Client Application/obj/SIS-VPN Client Application.csproj.nuget.g.props
+
+SIS-VPN Client Application/obj/Debug/net5.0-windows/App.g.i.cs
+
+SIS-VPN Client Application/obj/SIS-VPN Client Application.csproj.nuget.dgspec.json
+
+SIS-VPN Client Application/obj/Debug/net5.0-windows/SIS-VPN Client Application.GeneratedMSBuildEditorConfig.editorconfig
+
+SIS-VPN Client Application/obj/Debug/net5.0-windows/SIS-VPN Client Application.designer.runtimeconfig.json

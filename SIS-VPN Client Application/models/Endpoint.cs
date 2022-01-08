@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SIS_VPN_Client_Application.models
@@ -13,10 +14,11 @@ namespace SIS_VPN_Client_Application.models
         private bool selected;
         private string name;
         private string configPath;
+        private string ipAddress;
 
         public Endpoint()
         {
-
+   
         }
 
         public Endpoint(bool selected, string name, string configPath)
@@ -24,6 +26,15 @@ namespace SIS_VPN_Client_Application.models
             this.selected = selected;
             this.name = name;
             this.configPath = configPath;
+            this.ipAddress = "";
+        }
+
+        public Endpoint(bool selected, string name, string configPath, string ipAddress)
+        {
+            this.selected = selected;
+            this.name = name;
+            this.configPath = configPath;
+            this.ipAddress = ipAddress;
         }
 
         public bool IsSelected
@@ -49,6 +60,7 @@ namespace SIS_VPN_Client_Application.models
                 name = value;
 
                 NotifyPropertyChanged();
+                NotifyPropertyChanged("NameAndAddress");
             }
         }
 
@@ -63,6 +75,26 @@ namespace SIS_VPN_Client_Application.models
 
                 NotifyPropertyChanged();
             }
+        }
+
+        public string IPAddress
+        {
+            get => ipAddress;
+            set
+            {
+                if (ipAddress == value)
+                    return;
+                ipAddress = value;
+
+                NotifyPropertyChanged();
+                NotifyPropertyChanged("NameAndAddress");
+            }
+        }
+
+        [JsonIgnore]
+        public string NameAndAddress // Would have been better to slap this into the View, but Radiobutton binding expects a property of the bound class
+        {
+            get => $"{Name} - {IPAddress}";
         }
     }
 }

@@ -18,7 +18,7 @@
         <Style TargetType="{x:Type Button}">
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
+                    <Setter Property="CornerRadius" Value="10" />
                 </Style>
             </Style.Resources>
             <Setter Property="Margin" Value="0,35,0,0" />
@@ -65,7 +65,7 @@
             </Style.Resources>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="20,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" />
             <RowDefinition Height="4*" />
@@ -88,7 +88,7 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <RadioButton Style="{StaticResource RadioButtonStyle}" Content="{Binding Name}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
+                            <RadioButton Style="{StaticResource RadioButtonStyle}" Content="{Binding NameAndAddress}" GroupName="DisplayPage" IsChecked="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

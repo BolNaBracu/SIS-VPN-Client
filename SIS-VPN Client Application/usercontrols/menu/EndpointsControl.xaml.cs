@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SIS_VPN_Client_Application.logic;
 using SIS_VPN_Client_Application.models;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
     public partial class EndpointsControl : UserControl, INotifyPropertyChanged
     {
         private Endpoint selectedEndpoint;
-        public Endpoint SelectedEndpoint 
+        public Endpoint SelectedEndpoint
         {
             get => selectedEndpoint;
             set
@@ -41,9 +42,6 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 
         public ObservableCollection<Endpoint> Endpoints { get; set; }
         private string settingsPath = "endpoints.json";
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public EndpointsControl()
         {
@@ -59,13 +57,23 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             if (!File.Exists(settingsPath))
                 return;
 
-            string endpointsJson = File.ReadAllText(settingsPath);
-            var savedEndpoints = JsonSerializer.Deserialize<List<Endpoint>>(endpointsJson);
+            try
+            {
+                string endpointsJson = File.ReadAllText(settingsPath);
 
-            Endpoints.Clear();
-            savedEndpoints.ForEach(endpoint => Endpoints.Add(endpoint));
+                var savedEndpoints = JsonSerializer.Deserialize<List<Endpoint>>(endpointsJson);
 
-            SelectedEndpoint = Endpoints.FirstOrDefault(endpoint => endpoint.IsSelected);
+                Endpoints.Clear();
+                savedEndpoints.ForEach(endpoint => Endpoints.Add(endpoint));
+
+                SelectedEndpoint = Endpoints.FirstOrDefault(endpoint => endpoint.IsSelected);
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            catch(JsonException)
+            {
+            }
         }
 
         private void SaveEndpoints()
@@ -86,13 +94,19 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 
         private void ButtonOpenConfig_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedEndpoint == null) return;
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "OpenVPN Config (*.ovpn)|*.ovpn";
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                SelectedEndpoint.ConfigPath = openFileDialog.FileName;
-            }
+            if (openFileDialog.ShowDialog() == false) return;
+
+            string configPath = openFileDialog.FileName;
+            VPNSettingsParser parser = new VPNSettingsParser(configPath);
+
+            parser.ReadConfigFile();
+            SelectedEndpoint.IPAddress = parser.ReadIPAddress();
+            SelectedEndpoint.ConfigPath = configPath;
         }
 
         private void ButtonNewEndpoint_Click(object sender, RoutedEventArgs e) => Endpoints.Add(new Endpoint(true, "New", ""));
@@ -105,5 +119,10 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             Endpoints.Remove(selectedEndpoint);
             SelectedEndpoint = Endpoints.Last();
         }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
