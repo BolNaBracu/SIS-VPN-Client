@@ -25,20 +25,33 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
     /// <summary>
     /// Interaction logic for EndpointsControl.xaml
     /// </summary>
-    public partial class EndpointsControl : UserControl
+    public partial class EndpointsControl : UserControl, INotifyPropertyChanged
     {
-        public Endpoint SelectedEndpoint { get; set; }
-        public ObservableCollection<Endpoint> Endpoints { get; set; }
+        private Endpoint selectedEndpoint;
+        public Endpoint SelectedEndpoint 
+        {
+            get => selectedEndpoint;
+            set
+            {
+                selectedEndpoint = value;
 
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Endpoint> Endpoints { get; set; }
         private string settingsPath = "endpoints.json";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public EndpointsControl()
         {
             Endpoints = new ObservableCollection<Endpoint>();
 
-            InitializeComponent(); // Note to self, init collections before InitializeComponent :(
-
             LoadSavedEndpoints();
+
+            InitializeComponent(); // Note to self, init collections before InitializeComponent :(
         }
 
         private void LoadSavedEndpoints()
@@ -71,7 +84,7 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 
         private void ButtonSaveEndpoints_Click(object sender, RoutedEventArgs e) => SaveEndpoints();
 
-        private void btnOpenConfig_Click(object sender, RoutedEventArgs e)
+        private void ButtonOpenConfig_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "OpenVPN Config (*.ovpn)|*.ovpn";
@@ -80,6 +93,17 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             {
                 SelectedEndpoint.ConfigPath = openFileDialog.FileName;
             }
+        }
+
+        private void ButtonNewEndpoint_Click(object sender, RoutedEventArgs e) => Endpoints.Add(new Endpoint(true, "New", ""));
+
+        private void ButtonDeleteEndpoint_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedEndpoint == null)
+                return;
+
+            Endpoints.Remove(selectedEndpoint);
+            SelectedEndpoint = Endpoints.Last();
         }
     }
 }
