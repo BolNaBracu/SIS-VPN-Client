@@ -5,7 +5,49 @@
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v5.0": {}
+    ".NETCoreApp,Version=v5.0": {
+      "Microsoft.Web.WebView2/1.0.1083-prerelease": {
+        "runtime": {
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll": {
+            "assemblyVersion": "1.0.1083.0",
+            "fileVersion": "1.0.1083.0"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll": {
+            "assemblyVersion": "1.0.1083.0",
+            "fileVersion": "1.0.1083.0"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll": {
+            "assemblyVersion": "1.0.1083.0",
+            "fileVersion": "1.0.1083.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/WebView2Loader.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "1.0.1083.0"
+          },
+          "runtimes/win-x64/native/WebView2Loader.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "1.0.1083.0"
+          },
+          "runtimes/win-x86/native/WebView2Loader.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "1.0.1083.0"
+          }
+        }
+      }
+    }
   },
-  "libraries": {}
+  "libraries": {
+    "Microsoft.Web.WebView2/1.0.1083-prerelease": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4H7JExgkXFpvyIeT+W9MQd4sRQA7mI+Jwj2sp5E4MYULsReZ4s/rGdtgEBFVgr0z8ndddsgiZpx96+ZbY7fFrw==",
+      "path": "microsoft.web.webview2/1.0.1083-prerelease",
+      "hashPath": "microsoft.web.webview2.1.0.1083-prerelease.nupkg.sha512"
+    }
+  }
 }

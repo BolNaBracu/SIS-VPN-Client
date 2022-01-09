@@ -16,4 +16,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgMicrosoft_Web_WebView2 Condition=" '$(PkgMicrosoft_Web_WebView2)' == '' ">C:\Users\Mislav\.nuget\packages\microsoft.web.webview2\1.0.1083-prerelease</PkgMicrosoft_Web_WebView2>
+  </PropertyGroup>
 </Project>
