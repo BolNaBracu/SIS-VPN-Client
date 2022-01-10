@@ -9,9 +9,6 @@ using SIS_VPN_Client_Application.usercontrols.menu;
 
 namespace SIS_VPN_Client_Application
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,6 +27,7 @@ namespace SIS_VPN_Client_Application
 
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
             { "WelcomeControl", new WelcomeControl() },
+            { "Endpoints", new EndpointsControl() },
             { "Connect", new ConnectControl() }
         };
 
