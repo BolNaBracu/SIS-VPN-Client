@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SIS_VPN_Client_Application.logic;
+using SIS_VPN_Client_Application.usercontrols;
+using SIS_VPN_Client_Application.usercontrols.menu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using SIS_VPN_Client_Application.logic;
-using SIS_VPN_Client_Application.usercontrols;
-using SIS_VPN_Client_Application.usercontrols.menu;
 
 namespace SIS_VPN_Client_Application
 {
@@ -19,7 +19,8 @@ namespace SIS_VPN_Client_Application
             InitializeComponent();
         }
 
-        private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
+        private readonly Dictionary<string, Control> controls = new()
+        {
             { "WelcomeControl", new WelcomeControl() },
             { "Endpoints", new EndpointsControl() },
             { "Connect", new ConnectControl() }
@@ -48,6 +49,10 @@ namespace SIS_VPN_Client_Application
         private void SideMenu_OnOptionSelected(object sender, usercontrols.OptionSelectedEventArgs e)
         {
             currentControl = e.SideMenuOption.ToString();
+            if (currentControl == "Connect")
+            {
+                ((ConnectControl)CurrentControl).EstablishConnection();
+            }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentControl)));
         }
 

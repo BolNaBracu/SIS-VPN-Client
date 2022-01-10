@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using SIS_VPN_Client_Application.logic;
+﻿using SIS_VPN_Client_Application.logic;
+using System.Windows;
 
 namespace SIS_VPN_Client_Application
 {
