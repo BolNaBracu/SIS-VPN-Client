@@ -1,11 +1,27 @@
-﻿using System;
+﻿using SIS_VPN_Client_Application.models;
+using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SIS_VPN_Client_Application.logic
 {
     public class ConnectVPN
     {
+        public delegate void ConnectionStateChanged(bool newState);
+        public event ConnectionStateChanged OnConnectionStateChanged;
+
+        private bool _isConnected = false;
+        private bool IsConnected
+        {
+            get => _isConnected;
+            set
+            {
+                _isConnected = value;
+                OnConnectionStateChanged?.Invoke(value);
+            }
+        }
         private Process vpnProcess = null;
+        public Endpoint selectedConfigEndpoint { get; set; } = null;
 
         private ConnectVPN() { }
 
@@ -22,8 +38,13 @@ namespace SIS_VPN_Client_Application.logic
             }
         }
 
-        public bool ConnectWithOpenVPN()
+        public async Task ConnectWithOpenVPNAsync()
         {
+            if (selectedConfigEndpoint is null)
+            {
+                throw new ArgumentException("Method doesn't know which OpenVPN configuration to run.");
+            }
+
             vpnProcess = new Process();
             ProcessStartInfo startInfo = new()
             {
@@ -31,28 +52,32 @@ namespace SIS_VPN_Client_Application.logic
                 Verb = "runas",
                 WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\",
                 FileName = "openvpn.exe",
-                //Arguments = "--config SISVPN_Client.ovpn"
-                Arguments = "--config SISVPN_Client_Singapore.ovpn"
+                Arguments = $"--config {selectedConfigEndpoint.FileName}",
+                WindowStyle = ProcessWindowStyle.Hidden
             };
-
             vpnProcess.StartInfo = startInfo;
-            return vpnProcess.Start() == false ? false : true;
+            vpnProcess.Start();
+
+            await Task.Delay(4000);
+
+            IsConnected = true;
         }
 
         public void DisconnectFromOpenVPN()
         {
-            if (vpnProcess is not null)
+            if (IsConnected)
             {
-                vpnProcess.Kill();
-                vpnProcess.Close();
+                Process.Start(new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    Verb = "runas",
+                    FileName = "taskkill",
+                    Arguments = $"/f /IM openvpn.exe",
+                    CreateNoWindow = true
+                }).WaitForExit();
+
+                IsConnected = false;
             }
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "taskkill",
-                Arguments = $"/f /im openvpn.exe",
-                CreateNoWindow = true,
-                UseShellExecute = false
-            }).WaitForExit();
         }
     }
 }

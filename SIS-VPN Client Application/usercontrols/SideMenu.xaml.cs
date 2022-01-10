@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using SIS_VPN_Client_Application.logic;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SIS_VPN_Client_Application.usercontrols
@@ -17,7 +19,7 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         public OptionSelectedEventArgs(SideMenuOptions sideMenuOption)
         {
-            this.SideMenuOption = sideMenuOption;
+            SideMenuOption = sideMenuOption;
         }
     }
 
@@ -28,19 +30,13 @@ namespace SIS_VPN_Client_Application.usercontrols
     {
         public SideMenuOptions SelectedOption { get; set; }
 
-        private bool connectionEstablished;
-
-        private void SetConnectionEstablished(bool value)
-        {
-            connectionEstablished = value;
-            ConnectButton.IsEnabled = value;
-        }
+        private bool ConnectionEstablished { get; set; }
 
         public SideMenu()
         {
             DataContext = this;
             InitializeComponent();
-            SetConnectionEstablished(true);
+            ConnectionEstablished = false;
         }
 
         public delegate void OptionSelected(object sender, OptionSelectedEventArgs e);
@@ -48,11 +44,13 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         private void ConnectButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (connectionEstablished)
+            if (!ConnectionEstablished)
             {
-                SelectedOption = SideMenuOptions.Connect;
-                AlertSubscribersOnOptionChange();
+                Task.Run(async () => await ConnectVPN.Instance.ConnectWithOpenVPNAsync());
+                ConnectionEstablished = true;
             }
+            SelectedOption = SideMenuOptions.Connect;
+            AlertSubscribersOnOptionChange();
         }
 
         private void EndpointsButton_Checked(object sender, RoutedEventArgs e)

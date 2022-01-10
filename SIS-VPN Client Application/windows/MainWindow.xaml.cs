@@ -16,13 +16,7 @@ namespace SIS_VPN_Client_Application
         public MainWindow()
         {
             DataContext = this;
-            WaitForConnection();
             InitializeComponent();
-        }
-
-        private void WaitForConnection()
-        {
-            ConnectVPN.Instance.ConnectWithOpenVPN();
         }
 
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
