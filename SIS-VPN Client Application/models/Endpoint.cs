@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace SIS_VPN_Client_Application.models
 {
@@ -13,27 +7,27 @@ namespace SIS_VPN_Client_Application.models
     {
         private bool selected;
         private string name;
-        private string configPath;
+        private string fileName;
         private string ipAddress;
 
         public Endpoint()
         {
-   
+
         }
 
-        public Endpoint(bool selected, string name, string configPath)
+        public Endpoint(bool selected, string name, string fileName)
         {
             this.selected = selected;
             this.name = name;
-            this.configPath = configPath;
-            this.ipAddress = "";
+            this.fileName = fileName;
+            ipAddress = "";
         }
 
-        public Endpoint(bool selected, string name, string configPath, string ipAddress)
+        public Endpoint(bool selected, string name, string fileName, string ipAddress)
         {
             this.selected = selected;
             this.name = name;
-            this.configPath = configPath;
+            this.fileName = fileName;
             this.ipAddress = ipAddress;
         }
 
@@ -43,7 +37,10 @@ namespace SIS_VPN_Client_Application.models
             set
             {
                 if (selected == value)
+                {
                     return;
+                }
+
                 selected = value;
 
                 NotifyPropertyChanged();
@@ -56,7 +53,10 @@ namespace SIS_VPN_Client_Application.models
             set
             {
                 if (name == value)
+                {
                     return;
+                }
+
                 name = value;
 
                 NotifyPropertyChanged();
@@ -64,14 +64,17 @@ namespace SIS_VPN_Client_Application.models
             }
         }
 
-        public string ConfigPath
+        public string FileName
         {
-            get => configPath;
+            get => fileName;
             set
             {
-                if (configPath == value)
+                if (fileName == value)
+                {
                     return;
-                configPath = value;
+                }
+
+                fileName = value;
 
                 NotifyPropertyChanged();
             }
@@ -83,7 +86,10 @@ namespace SIS_VPN_Client_Application.models
             set
             {
                 if (ipAddress == value)
+                {
                     return;
+                }
+
                 ipAddress = value;
 
                 NotifyPropertyChanged();
@@ -93,8 +99,6 @@ namespace SIS_VPN_Client_Application.models
 
         [JsonIgnore]
         public string NameAndAddress // Would have been better to slap this into the View, but Radiobutton binding expects a property of the bound class
-        {
-            get => $"{Name} - {IPAddress}";
-        }
+=> $"{Name} - {IPAddress}";
     }
 }
