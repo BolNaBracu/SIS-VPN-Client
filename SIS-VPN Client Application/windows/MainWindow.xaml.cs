@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SIS_VPN_Client_Application.logic;
 using SIS_VPN_Client_Application.usercontrols;
 using SIS_VPN_Client_Application.usercontrols.menu;
 
 namespace SIS_VPN_Client_Application
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,31 +22,13 @@ namespace SIS_VPN_Client_Application
 
         private void WaitForConnection()
         {
-            ConnectVPN.Instance.OnConnectionChange += VPN_OnConnectionChange;
-            _ = Task.Run(async () => await ConnectVPN.Instance.WaitForConnectionAsync());
-        }
-
-        private void VPN_OnConnectionChange(object sender, OnConnectionChangeEventArgs e)
-        {
-            if (e.NewState == true)
-            {
-                if (!controls.TryGetValue("Connect", out _))
-                {
-                    controls.Add("Connect", new ConnectControl());
-                }
-            }
-            else
-            {
-                if (controls.TryGetValue("Connect", out _))
-                {
-                    controls.Remove("Connect");
-                }
-            }
+            ConnectVPN.Instance.ConnectWithOpenVPN();
         }
 
         private readonly Dictionary<string, Control> controls = new Dictionary<string, Control> {
             { "WelcomeControl", new WelcomeControl() },
             { "Endpoints", new EndpointsControl() },
+            { "Connect", new ConnectControl() }
         };
 
         private string currentControl = "WelcomeControl";

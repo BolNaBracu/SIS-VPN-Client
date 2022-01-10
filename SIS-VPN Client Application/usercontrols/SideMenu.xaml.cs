@@ -1,19 +1,5 @@
-﻿using SIS_VPN_Client_Application.logic;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SIS_VPN_Client_Application.usercontrols
 {
@@ -46,9 +32,6 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         private void SetConnectionEstablished(bool value)
         {
-            new BitmapImage(new Uri("pack://application:;" + (value ?
-            "\\resources\\symbols\\symbol-connected.png" :
-            "\\resources\\symbols\\symbol-disconnected.png")));
             connectionEstablished = value;
             ConnectButton.IsEnabled = value;
         }
@@ -57,12 +40,7 @@ namespace SIS_VPN_Client_Application.usercontrols
         {
             DataContext = this;
             InitializeComponent();
-            ConnectVPN.Instance.OnConnectionChange += VPN_OnConnectionChange;
-        }
-
-        private void VPN_OnConnectionChange(object sender, OnConnectionChangeEventArgs e)
-        {
-            SetConnectionEstablished(e.NewState);
+            SetConnectionEstablished(true);
         }
 
         public delegate void OptionSelected(object sender, OptionSelectedEventArgs e);

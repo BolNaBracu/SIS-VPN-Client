@@ -65,6 +65,9 @@
     <None Update="OpenVPN\bin\SISVPN_Client.ovpn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OpenVPN\bin\SISVPN_Client_Singapore.ovpn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OpenVPN\bin\SIS_VPN_Client.ovpn">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
