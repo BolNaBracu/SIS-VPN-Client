@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace SIS_VPN_Client_Application.logic
 {
@@ -26,17 +22,7 @@ namespace SIS_VPN_Client_Application.logic
             }
         }
 
-        public delegate void OnConnectionChangeEvent(object sender, OnConnectionChangeEventArgs e);
-        public event OnConnectionChangeEvent OnConnectionChange;
-
-
-        public async Task WaitForConnectionAsync()
-        {
-            bool connectedWithVPN = await ConnectWithOpenVPNAsync();
-            OnConnectionChange?.Invoke(this, new OnConnectionChangeEventArgs(connectedWithVPN));
-        }
-
-        private async Task<bool> ConnectWithOpenVPNAsync()
+        public bool ConnectWithOpenVPN()
         {
             vpnProcess = new Process();
             ProcessStartInfo startInfo = new()
@@ -45,14 +31,12 @@ namespace SIS_VPN_Client_Application.logic
                 Verb = "runas",
                 WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\",
                 FileName = "openvpn.exe",
-                Arguments = "--config SISVPN_Client.ovpn"
+                //Arguments = "--config SISVPN_Client.ovpn"
+                Arguments = "--config SISVPN_Client_Singapore.ovpn"
             };
 
             vpnProcess.StartInfo = startInfo;
-            if (vpnProcess.Start() == false) return false;
-
-            await Task.Delay(1000);
-            return true;
+            return vpnProcess.Start() == false ? false : true;
         }
 
         public void DisconnectFromOpenVPN()
@@ -66,6 +50,7 @@ namespace SIS_VPN_Client_Application.logic
             {
                 FileName = "taskkill",
                 Arguments = $"/f /im openvpn.exe",
+                CreateNoWindow = true,
                 UseShellExecute = false
             }).WaitForExit();
         }
