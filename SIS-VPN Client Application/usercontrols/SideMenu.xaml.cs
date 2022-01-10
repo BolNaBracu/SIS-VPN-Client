@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SIS_VPN_Client_Application.usercontrols
 {
@@ -40,10 +27,20 @@ namespace SIS_VPN_Client_Application.usercontrols
     public partial class SideMenu : UserControl
     {
         public SideMenuOptions SelectedOption { get; set; }
+
+        private bool connectionEstablished;
+
+        private void SetConnectionEstablished(bool value)
+        {
+            connectionEstablished = value;
+            ConnectButton.IsEnabled = value;
+        }
+
         public SideMenu()
         {
             DataContext = this;
             InitializeComponent();
+            SetConnectionEstablished(true);
         }
 
         public delegate void OptionSelected(object sender, OptionSelectedEventArgs e);
@@ -51,8 +48,11 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         private void ConnectButton_Checked(object sender, RoutedEventArgs e)
         {
-            SelectedOption = SideMenuOptions.Connect;
-            AlertSubscribersOnOptionChange();
+            if (connectionEstablished)
+            {
+                SelectedOption = SideMenuOptions.Connect;
+                AlertSubscribersOnOptionChange();
+            }
         }
 
         private void EndpointsButton_Checked(object sender, RoutedEventArgs e)
