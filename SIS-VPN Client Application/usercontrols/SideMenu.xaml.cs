@@ -46,7 +46,7 @@ namespace SIS_VPN_Client_Application.usercontrols
         {
             if (!ConnectionEstablished)
             {
-                Task.Run(async () => await ConnectVPN.Instance.ConnectWithOpenVPNAsync());
+                _ = Task.Run(async () => await ConnectVPN.Instance.ConnectWithOpenVPNAsync());
                 ConnectionEstablished = true;
             }
             SelectedOption = SideMenuOptions.Connect;

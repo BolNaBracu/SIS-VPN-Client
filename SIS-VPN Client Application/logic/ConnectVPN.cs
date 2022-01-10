@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SIS_VPN_Client_Application.logic
 {
@@ -21,7 +22,7 @@ namespace SIS_VPN_Client_Application.logic
             }
         }
         private Process vpnProcess = null;
-        public Endpoint selectedConfigEndpoint { get; set; } = null;
+        public Endpoint SelectedConfigEndpoint { get; set; } = null;
 
         private ConnectVPN() { }
 
@@ -40,7 +41,7 @@ namespace SIS_VPN_Client_Application.logic
 
         public async Task ConnectWithOpenVPNAsync()
         {
-            if (selectedConfigEndpoint is null)
+            if (SelectedConfigEndpoint is null)
             {
                 throw new ArgumentException("Method doesn't know which OpenVPN configuration to run.");
             }
@@ -52,32 +53,51 @@ namespace SIS_VPN_Client_Application.logic
                 Verb = "runas",
                 WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\",
                 FileName = "openvpn.exe",
-                Arguments = $"--config {selectedConfigEndpoint.FileName}",
+                Arguments = $"--config {SelectedConfigEndpoint.FileName}",
                 WindowStyle = ProcessWindowStyle.Hidden
             };
             vpnProcess.StartInfo = startInfo;
-            vpnProcess.Start();
+            try
+            {
+                vpnProcess.Start();
+            }
+            catch
+            {
+                MessageBox.Show("OpenVPN couldn't start!\n" +
+                    "Either \"openvpn.exe\" is missing, or you don't have sufficient rights to run this application.", "Execution stopped", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            await Task.Delay(4000);
+            await Task.Delay(5000);
 
             IsConnected = true;
         }
 
-        public void DisconnectFromOpenVPN()
+        public bool DisconnectFromOpenVPN()
         {
             if (IsConnected)
             {
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    UseShellExecute = true,
-                    Verb = "runas",
-                    FileName = "taskkill",
-                    Arguments = $"/f /IM openvpn.exe",
-                    CreateNoWindow = true
-                }).WaitForExit();
+                    Process.Start(new ProcessStartInfo
+                    {
+                        UseShellExecute = true,
+                        Verb = "runas",
+                        FileName = "taskkill",
+                        Arguments = $"/f /IM openvpn.exe",
+                        WindowStyle = ProcessWindowStyle.Hidden
+                    }).WaitForExit();
+                    IsConnected = false;
 
-                IsConnected = false;
+                    return true;
+                }
+                catch
+                {
+                    MessageBox.Show("OpenVPN remains turned on!", "Termination stopped", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
+
+            return false;
         }
     }
 }

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,7 +27,11 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             set
             {
                 selectedEndpoint = value;
-                ConnectVPN.Instance.selectedConfigEndpoint = value;
+                if (ConnectVPN.Instance.DisconnectFromOpenVPN())
+                {
+                    _ = Task.Run(async () => await ConnectVPN.Instance.ConnectWithOpenVPNAsync());
+                }
+                ConnectVPN.Instance.SelectedConfigEndpoint = value;
                 NotifyPropertyChanged();
             }
         }
@@ -61,7 +66,7 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 
                 SelectedEndpoint = Endpoints.FirstOrDefault(endpoint => endpoint.IsSelected);
 
-                ConnectVPN.Instance.selectedConfigEndpoint = SelectedEndpoint;
+                ConnectVPN.Instance.SelectedConfigEndpoint = SelectedEndpoint;
             }
             catch (InvalidOperationException)
             {
