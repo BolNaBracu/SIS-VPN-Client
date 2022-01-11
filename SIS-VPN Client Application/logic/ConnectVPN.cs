@@ -70,7 +70,7 @@ namespace SIS_VPN_Client_Application.logic
                 return;
             }
 
-            await Task.Delay(DelayTimer);
+            await Task.Delay(DelayTimer - (DelayTimer / 5) + 100);
 
             IsConnected = true;
         }

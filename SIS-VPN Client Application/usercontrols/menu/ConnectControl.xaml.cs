@@ -9,6 +9,8 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 {
     public partial class ConnectControl : UserControl, INotifyPropertyChanged
     {
+        private bool isRefreshNeeded;
+
         private string _connectingMessage;
         public string ConnectingMessage
         {
@@ -44,20 +46,36 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
 
         private void VPN_OnConnectionStateChanged(bool newState)
         {
-            Dispatcher.Invoke(() =>
-            {
-                ConnectingMessage = newState ? "" : $"Reconnecting to {ConnectVPN.Instance.SelectedConfigEndpoint.Name}";
-                connectionProgressBar.Visibility = newState ? Visibility.Hidden : Visibility.Visible;
-                if (newState)
+            _ = Dispatcher.Invoke(async () =>
                 {
-                    webView.Visibility = Visibility.Visible;
-                    webView.Source = new Uri("http://10.8.0.1:3000/", UriKind.Absolute);
-                }
-                else
-                {
-                    webView.Visibility = Visibility.Hidden;
-                }
-            });
+                    if (newState)
+                    {
+                        webView.Source = new Uri("http://10.8.0.1:3000/", UriKind.Absolute);
+
+                        if (isRefreshNeeded)
+                        {
+                            try
+                            {
+                                await webView.ExecuteScriptAsync("document.location.reload()");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                            }
+                        }
+
+                        await Task.Delay(ConnectVPN.Instance.DelayTimer - (ConnectVPN.Instance.DelayTimer / 5 * 4) + 100);
+                        webView.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        webView.Visibility = Visibility.Hidden;
+                        isRefreshNeeded = true;
+                    }
+                    ConnectingMessage = newState ? "" : $"Reconnecting to {ConnectVPN.Instance.SelectedConfigEndpoint.Name}";
+                    connectionProgressBar.Visibility = newState ? Visibility.Hidden : Visibility.Visible;
+                    isRefreshNeeded = !newState;
+                });
         }
 
         private void webView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)

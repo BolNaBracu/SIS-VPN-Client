@@ -14,7 +14,7 @@
             <DockPanel DockPanel.Dock="Top" />
             <wv2:WebView2 Name="webView" CoreWebView2InitializationCompleted="webView_CoreWebView2InitializationCompleted" />
         </DockPanel>
-        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="0 0 0 10px" Text="{Binding ConnectingMessage}" Foreground="Green" TextAlignment="Center" FontSize="20px" />
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="0 0 0 10px" Text="{Binding ConnectingMessage}" Foreground="LightGreen" TextAlignment="Center" FontSize="20px" />
         <ProgressBar x:Name="connectionProgressBar" IsIndeterminate="True" Grid.Row="1" Grid.Column="1" />
     </Grid>
 </UserControl>
