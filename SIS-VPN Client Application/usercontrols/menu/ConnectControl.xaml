@@ -1,6 +1,20 @@
-﻿<UserControl x:Class="SIS_VPN_Client_Application.usercontrols.menu.ConnectControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:local="clr-namespace:SIS_VPN_Client_Application.usercontrols.menu" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
-    <DockPanel>
-        <DockPanel DockPanel.Dock="Top" />
-        <wv2:WebView2 Name="webView"  />
-    </DockPanel>
+﻿<UserControl x:Class="SIS_VPN_Client_Application.usercontrols.menu.ConnectControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf" xmlns:local="clr-namespace:SIS_VPN_Client_Application.usercontrols.menu" DataContext="{Binding RelativeSource={RelativeSource Self}}" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25px" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Column="1" Grid.RowSpan="3">
+            <DockPanel DockPanel.Dock="Top" />
+            <wv2:WebView2 Name="webView" CoreWebView2InitializationCompleted="webView_CoreWebView2InitializationCompleted" />
+        </DockPanel>
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Bottom" Margin="0 0 0 10px" Text="{Binding ConnectingMessage}" Foreground="LightGreen" TextAlignment="Center" FontSize="20px" />
+        <ProgressBar x:Name="connectionProgressBar" IsIndeterminate="True" Grid.Row="1" Grid.Column="1" />
+    </Grid>
 </UserControl>

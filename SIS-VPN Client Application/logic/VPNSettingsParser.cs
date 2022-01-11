@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIS_VPN_Client_Application.logic
 {
-    class VPNSettingsParser
+    internal class VPNSettingsParser
     {
-        private string configPath;
-        private List<string> configEntries;
+        private readonly string configPath;
+        private readonly List<string> configEntries;
 
         public VPNSettingsParser(string configPath)
         {
             this.configPath = configPath;
-            this.configEntries = new List<string>();
+            configEntries = new List<string>();
         }
 
         public void ReadConfigFile()
         {
-            var allConfigLines = File.ReadAllLines(configPath).ToList();
+            List<string> allConfigLines = File.ReadAllLines(configPath).ToList();
 
             configEntries.Clear();
-            foreach(var line in allConfigLines)
+            foreach (string line in allConfigLines)
             {
-                if (line.Contains("ca")) break;
+                if (line.Contains("ca"))
+                {
+                    break;
+                }
 
                 configEntries.Add(line);
             }
@@ -33,10 +33,12 @@ namespace SIS_VPN_Client_Application.logic
 
         public string ReadIPAddress()
         {
-            var ipLine = configEntries.FirstOrDefault(entry => entry.Contains("remote") && entry.Contains("."));
+            string ipLine = configEntries.FirstOrDefault(entry => entry.Contains("remote") && entry.Contains("."));
 
             if (ipLine == null)
+            {
                 return "";
+            }
 
             return ipLine.Split(' ')[1];
         }

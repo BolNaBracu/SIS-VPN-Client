@@ -8,18 +8,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SIS_VPN_Client_Application.usercontrols.menu
 {
@@ -35,13 +27,17 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             set
             {
                 selectedEndpoint = value;
-
+                if (ConnectVPN.Instance.DisconnectFromOpenVPN())
+                {
+                    _ = Task.Run(async () => await ConnectVPN.Instance.ConnectWithOpenVPNAsync());
+                }
+                ConnectVPN.Instance.SelectedConfigEndpoint = value;
                 NotifyPropertyChanged();
             }
         }
 
         public ObservableCollection<Endpoint> Endpoints { get; set; }
-        private string settingsPath = "endpoints.json";
+        public readonly static string settingsPath = "endpoints.json";
 
         public EndpointsControl()
         {
@@ -55,23 +51,27 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
         private void LoadSavedEndpoints()
         {
             if (!File.Exists(settingsPath))
+            {
                 return;
+            }
 
             try
             {
                 string endpointsJson = File.ReadAllText(settingsPath);
 
-                var savedEndpoints = JsonSerializer.Deserialize<List<Endpoint>>(endpointsJson);
+                List<Endpoint> savedEndpoints = JsonSerializer.Deserialize<List<Endpoint>>(endpointsJson);
 
                 Endpoints.Clear();
                 savedEndpoints.ForEach(endpoint => Endpoints.Add(endpoint));
 
                 SelectedEndpoint = Endpoints.FirstOrDefault(endpoint => endpoint.IsSelected);
+
+                ConnectVPN.Instance.SelectedConfigEndpoint = SelectedEndpoint;
             }
             catch (InvalidOperationException)
             {
             }
-            catch(JsonException)
+            catch (JsonException)
             {
             }
         }
@@ -90,39 +90,78 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
             }
         }
 
-        private void ButtonSaveEndpoints_Click(object sender, RoutedEventArgs e) => SaveEndpoints();
+        private void ButtonSaveEndpoints_Click(object sender, RoutedEventArgs e)
+        {
+            SaveEndpoints();
+        }
 
         private void ButtonOpenConfig_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedEndpoint == null) return;
+            if (selectedEndpoint == null)
+            {
+                return;
+            }
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "OpenVPN Config (*.ovpn)|*.ovpn";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Select only from this directory!",
+                Filter = "OpenVPN Config (*.ovpn)|*.ovpn",
+                InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\"
+            };
 
-            if (openFileDialog.ShowDialog() == false) return;
+            if (openFileDialog.ShowDialog() == false)
+            {
+                return;
+            }
 
             string configPath = openFileDialog.FileName;
+
+            if (!configPath.StartsWith(AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\"))
+            {
+                MessageBox.Show(@"OpenVPN file must be in ""OpenVPN\bin\"" folder!", "Invalid file location.", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             VPNSettingsParser parser = new VPNSettingsParser(configPath);
 
             parser.ReadConfigFile();
             SelectedEndpoint.IPAddress = parser.ReadIPAddress();
-            SelectedEndpoint.ConfigPath = configPath;
+            SelectedEndpoint.FileName = configPath.Split(AppDomain.CurrentDomain.BaseDirectory + @"OpenVPN\bin\")[1];
         }
 
-        private void ButtonNewEndpoint_Click(object sender, RoutedEventArgs e) => Endpoints.Add(new Endpoint(true, "New", ""));
+        private void ButtonNewEndpoint_Click(object sender, RoutedEventArgs e)
+        {
+            Endpoints.Add(new Endpoint(true, "New", ""));
+        }
 
         private void ButtonDeleteEndpoint_Click(object sender, RoutedEventArgs e)
         {
             if (selectedEndpoint == null)
+            {
                 return;
+            }
+
+            MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete {selectedEndpoint.Name} endpoint?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
 
             Endpoints.Remove(selectedEndpoint);
-            SelectedEndpoint = Endpoints.Last();
+
+            if (Endpoints.Count > 0)
+            {
+                SelectedEndpoint = Endpoints.Last();
+            }
         }
 
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

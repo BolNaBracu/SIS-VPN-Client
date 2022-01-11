@@ -1,0 +1,14 @@
+[
+  {
+    "IsSelected": false,
+    "Name": "Zagreb",
+    "FileName": "SISVPN_Client.ovpn",
+    "IPAddress": "89.164.57.249"
+  },
+  {
+    "IsSelected": true,
+    "Name": "Singapore",
+    "FileName": "SISVPN_Client_Singapore.ovpn",
+    "IPAddress": "159.223.83.167"
+  }
+]

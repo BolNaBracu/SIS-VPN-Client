@@ -16,6 +16,7 @@
     <PackageIconUrl />
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>VPN, security</PackageTags>
+    <ApplicationManifest>application.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="endpoints.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OpenVPN\bin\libcrypto-1_1-x64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -77,9 +81,6 @@
     <None Update="OpenVPN\bin\vcruntime140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OpenVPN\config\README.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="OpenVPN\include\tap-windows.h">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -105,9 +106,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="openvpn\openvpnserv.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="OpenVPN\res\ovpn.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="openvpn\tapctl.exe">

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -19,7 +19,7 @@ namespace SIS_VPN_Client_Application.usercontrols
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Environment.Exit(0);
+            Application.Current.Shutdown();
         }
 
         private void btnClose_MouseEnter(object sender, MouseEventArgs e)
@@ -35,7 +35,9 @@ namespace SIS_VPN_Client_Application.usercontrols
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
+            {
                 OnMovingWindow();
+            }
         }
     }
 }
