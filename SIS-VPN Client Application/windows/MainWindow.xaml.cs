@@ -23,6 +23,7 @@ namespace SIS_VPN_Client_Application
         {
             { "WelcomeControl", new WelcomeControl() },
             { "Endpoints", new EndpointsControl() },
+            { "Options", new OptionsControl() },
             { "Connect", new ConnectControl() }
         };
 

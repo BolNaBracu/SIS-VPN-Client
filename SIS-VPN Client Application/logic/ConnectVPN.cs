@@ -39,6 +39,8 @@ namespace SIS_VPN_Client_Application.logic
             }
         }
 
+        public int DelayTimer { get; internal set; } = 5000;
+
         public async Task ConnectWithOpenVPNAsync()
         {
             if (SelectedConfigEndpoint is null)
@@ -68,7 +70,7 @@ namespace SIS_VPN_Client_Application.logic
                 return;
             }
 
-            await Task.Delay(5000);
+            await Task.Delay(DelayTimer);
 
             IsConnected = true;
         }

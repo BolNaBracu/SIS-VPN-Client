@@ -37,7 +37,7 @@ namespace SIS_VPN_Client_Application.usercontrols.menu
         }
 
         public ObservableCollection<Endpoint> Endpoints { get; set; }
-        private readonly string settingsPath = "endpoints.json";
+        public readonly static string settingsPath = "endpoints.json";
 
         public EndpointsControl()
         {
