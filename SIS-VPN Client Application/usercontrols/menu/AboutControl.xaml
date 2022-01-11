@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="SIS_VPN_Client_Application.usercontrols.menu.AboutControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:SIS_VPN_Client_Application.usercontrols.menu" mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="900">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="Foreground" Value="LightGreen" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="4*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="About VPN-SIS"  FontSize="50" TextWrapping="Wrap" />
+
+        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" TextWrapping="Wrap" Text="Created for class SIS (Sigurnost informacijskih sustava)" />
+        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="20" TextWrapping="Wrap" Text="Opens an OpenVPN connection to an endpoint (server) with OpenVPN server installed." />
+        <StackPanel Grid.Column="1" Grid.Row="7">
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="Technology:" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="     - Client: C# on .NET 5.0" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="     - Server: React.js" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="9">
+            <TextBlock FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Text="Project Team Members:" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Text="     Development" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mislav Matijević" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Lovro Posarić" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Text="     Documentation" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Luka Jurić-Grgić" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mario Nižić" />
+            <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mateo Mustać" />
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

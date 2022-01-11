@@ -24,7 +24,8 @@ namespace SIS_VPN_Client_Application
             { "WelcomeControl", new WelcomeControl() },
             { "Endpoints", new EndpointsControl() },
             { "Options", new OptionsControl() },
-            { "Connect", new ConnectControl() }
+            { "Connect", new ConnectControl() },
+            { "About", new AboutControl() }
         };
 
         private string currentControl = "WelcomeControl";
