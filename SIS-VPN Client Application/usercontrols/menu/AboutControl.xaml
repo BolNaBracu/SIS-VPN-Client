@@ -8,32 +8,40 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="13*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="2*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="About VPN-SIS"  FontSize="50" TextWrapping="Wrap" />
+        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Text="About VPN-SIS" FontSize="50" TextWrapping="Wrap" />
+        <Image Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Source="/resources/icon.png" />
 
-        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" TextWrapping="Wrap" Text="Created for class SIS (Sigurnost informacijskih sustava)" />
-        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="20" TextWrapping="Wrap" Text="Opens an OpenVPN connection to an endpoint (server) with OpenVPN server installed." />
-        <StackPanel Grid.Column="1" Grid.Row="7">
-            <TextBlock FontSize="20" TextWrapping="Wrap" Text="Technology:" />
+        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="20" TextWrapping="Wrap" Text="Created for class SIS (Sigurnost informacijskih sustava)" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="5" FontSize="20" TextWrapping="Wrap" Text="Opens an OpenVPN connection to an endpoint (server) with OpenVPN server installed." Grid.ColumnSpan="2" Margin="0,11,0,0" />
+
+        <Separator Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Height="2" Background="DarkGreen" />
+
+        <StackPanel Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,0,0,11">
+            <TextBlock FontSize="20" FontWeight="Bold" TextWrapping="Wrap" Text="Technology:" />
             <TextBlock FontSize="20" TextWrapping="Wrap" Text="     - Client: C# on .NET 5.0" />
             <TextBlock FontSize="20" TextWrapping="Wrap" Text="     - Server: React.js" />
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="9">
+
+        <Separator Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" Height="2" Background="DarkGreen" />
+
+        <StackPanel Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Margin="0,11,0,45">
             <TextBlock FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Text="Project Team Members:" />
             <TextBlock FontSize="20" TextWrapping="Wrap" FontWeight="Bold" Text="     Development" />
             <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mislav Matijević" />
@@ -43,6 +51,6 @@
             <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mario Nižić" />
             <TextBlock FontSize="20" TextWrapping="Wrap" Text="         Mateo Mustać" />
         </StackPanel>
-        
+
     </Grid>
 </UserControl>
